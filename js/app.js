@@ -1,4 +1,6 @@
 'use strict';
+import requestAnimationFramePlyfil from './polyfil.js';
+import ButtonUpDown from './ButtonUpDown'
 
 new ButtonUpDown({
         canvasStyle: {
@@ -15,6 +17,7 @@ new ButtonUpDown({
         animationTime: 0.2
     }
 );
+
 
 new ButtonUpDown({
         canvasStyle: {
@@ -34,4 +37,4 @@ new ButtonUpDown({
 
 
 
-
+exports.ButtonUpDown = ButtonUpDown //выгрузка во внешнюю переменную

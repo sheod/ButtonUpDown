@@ -1,18 +1,17 @@
 'use strict';
 
-class  ButtonUpDown {
+export default class  ButtonUpDown {
     constructor(props) {
         this.props = props;
         this.radianDelta = 180 / this.props.animationTime * Math.PI / 180 * 0.0167;
         this.radian = 0;
         this.elemOpacitySpeedAnimation = (this.props.barOpacity / this.props.barOpacityTimeAnimation) * 0.0167;
-        window.addEventListener('DOMContentLoaded', this.__render())
+        window.addEventListener('load', this.__render())
     }
 
     __render() {
         this.__createCanvas();
         window.addEventListener('scroll', this.__toggleVisibility());
-        this.canvas.addEventListener('click', this.__togglePosition())
     }
 
     __canvasDraw() {
@@ -42,20 +41,19 @@ class  ButtonUpDown {
         this.canvas.pagePosition = '';
 
         let loadImg = () => {
-            return () => {
-                document.body.appendChild(this.canvas);
-                this.__canvasDraw()
-            }
+            document.body.appendChild(this.canvas);
+            this.__canvasDraw()
         };
 
         if(this.img.complete) {
-            loadImg(this.img)();
+            loadImg();
         }
         else {
-            this.img.onload = loadImg(this.img);
+            this.img.onload = loadImg;
         }
 
         this.__canvasStyle()
+        this.canvas.addEventListener('click', this.__togglePosition.bind(this))
     }
 
 
@@ -133,24 +131,22 @@ class  ButtonUpDown {
     }
 
     __togglePosition()  {
-        return () => {
-            if (this.canvas.scroll === false) {
-                this.canvas.scroll = true;
+        if (this.canvas.scroll === false) {
+            this.canvas.scroll = true;
+            
+            switch (this.canvas.pagePosition) {
+                case (''):
+                    this.canvas.scroll = false;
+                    break;
 
-                switch (this.canvas.pagePosition) {
-                    case (''):
-                        this.canvas.scroll = false;
-                        break;
+                case ('top'):
+                    this.canvas.whereReturn = window.pageYOffset;
+                    this.__togglePositionAnimation(0, 'bottom', -1);
+                    break;
 
-                    case ('top'):
-                        this.canvas.whereReturn = window.pageYOffset;
-                        this.__togglePositionAnimation(0, 'bottom', -1);
-                        break;
-
-                    case ('bottom'):
-                        this.__togglePositionAnimation(0, 'top', 1);
-                        break;
-                }
+                case ('bottom'):
+                    this.__togglePositionAnimation(0, 'top', 1);
+                    break;
             }
         }
     }
