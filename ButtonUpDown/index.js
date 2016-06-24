@@ -1,5 +1,5 @@
 'use strict';
-import requestAnimationFramePlyfil from './polyfil.js';
+
 import ButtonUpDown from './ButtonUpDown'
 
 new ButtonUpDown({
