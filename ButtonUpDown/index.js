@@ -2,7 +2,7 @@
 
 import ButtonUpDown from './ButtonUpDown'
 
-new ButtonUpDown({
+let firstButton = new ButtonUpDown({
         canvasStyle: {
             radius: 30,
             top: '20%',
@@ -17,8 +17,14 @@ new ButtonUpDown({
         animationTime: 0.2
     }
 );
+window.addEventListener('load', function() {
+    document.body.appendChild(firstButton.canvas)
+})
+window.addEventListener('load', firstButton.__render())
+window.addEventListener('scroll', firstButton.__toggleVisibility());
 
 
+/*
 new ButtonUpDown({
         canvasStyle: {
             radius: 20,
@@ -33,7 +39,7 @@ new ButtonUpDown({
         imgSrc : './img/up-arrow-icon-top-small.png',
         animationTime: 0.3
     }
-);
+);*/
 
 
 
