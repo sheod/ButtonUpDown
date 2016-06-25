@@ -6,13 +6,12 @@ export default class  ButtonUpDown {
         this.radianDelta = 180 / this.props.animationTime * Math.PI / 180 * 0.0167;
         this.radian = 0;
         this.elemOpacitySpeedAnimation = (this.props.barOpacity / this.props.barOpacityTimeAnimation) * 0.0167;
-        
+        this.createCanvas();
     }
 
-    __render() {
-        this.__createCanvas();
-
-    }
+    //__render() {
+        //this.__createCanvas();
+    //}
 
     __canvasDraw() {
         this.ctx.beginPath();
@@ -32,7 +31,7 @@ export default class  ButtonUpDown {
         this.canvas.style.opacity = 0
     }
 
-    __createCanvas() {
+    createCanvas() {
         this.img = document.createElement('img');
         this.img.src = this.props.imgSrc;
         this.canvas = document.createElement('canvas');
