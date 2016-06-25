@@ -21,7 +21,7 @@ window.addEventListener('load', function() {
     document.body.appendChild(firstButton.canvas)
 })
 window.addEventListener('load', firstButton.createCanvas())
-window.addEventListener('scroll', firstButton.__toggleVisibility());
+window.addEventListener('scroll', firstButton.toggleVisibility());
 
 
 /*

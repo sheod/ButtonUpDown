@@ -6,13 +6,8 @@ export default class  ButtonUpDown {
         this.radianDelta = 180 / this.props.animationTime * Math.PI / 180 * 0.0167;
         this.radian = 0;
         this.elemOpacitySpeedAnimation = (this.props.barOpacity / this.props.barOpacityTimeAnimation) * 0.0167;
-        this.createCanvas();
     }
-
-    //__render() {
-        //this.__createCanvas();
-    //}
-
+    
     __canvasDraw() {
         this.ctx.beginPath();
         this.ctx.arc(this.props.canvasStyle.radius, this.props.canvasStyle.radius, this.props.canvasStyle.radius, 0, 2 * Math.PI, true);
@@ -82,7 +77,7 @@ export default class  ButtonUpDown {
 
     }
 
-    __toggleVisibility() {
+    toggleVisibility() {
         let pageYOffset;
         let show = {};
 
