@@ -17,15 +17,18 @@ let firstButton = new ButtonUpDown({
         animationTime: 0.2
     }
 );
-window.addEventListener('load', function() {
-    document.body.appendChild(firstButton.canvas)
-})
-window.addEventListener('load', firstButton.createCanvas())
-window.addEventListener('scroll', firstButton.toggleVisibility());
 
+window.addEventListener('DOMContentLoaded', function() {
+    firstButton.createCanvas()
+    window.addEventListener('scroll', firstButton.toggleVisibility());
+})
+
+window.addEventListener('load', function() {
+    document.body.appendChild(firstButton.element)
+})
 
 /*
-new ButtonUpDown({
+let secondButton = new ButtonUpDown({
         canvasStyle: {
             radius: 20,
             top: '50%',
@@ -39,8 +42,8 @@ new ButtonUpDown({
         imgSrc : './img/up-arrow-icon-top-small.png',
         animationTime: 0.3
     }
-);*/
+);
+*/
 
 
-
-exports.ButtonUpDown = ButtonUpDown //выгрузка во внешнюю переменную
+exports.ButtonUpDown = ButtonUpDown //upload to an external variable

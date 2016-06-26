@@ -13,26 +13,26 @@ export default class  ButtonUpDown {
         this.ctx.arc(this.props.canvasStyle.radius, this.props.canvasStyle.radius, this.props.canvasStyle.radius, 0, 2 * Math.PI, true);
         this.ctx.fillStyle = this.props.color;
         this.ctx.fill();
-        this.ctx.drawImage(this.img, 0, 0, this.img.width, this.img.height, 0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.drawImage(this.img, 0, 0, this.img.width, this.img.height, 0, 0, this.element.width, this.element.height);
         this.ctx.closePath();
     }
 
     __canvasStyle() {
-        this.canvas.width = this.props.canvasStyle.radius * 2;
-        this.canvas.height = this.props.canvasStyle.radius * 2;
-        this.canvas.style.position = 'fixed';
-        this.canvas.style.top = this.props.canvasStyle.top;
-        this.canvas.style[this.props.canvasStyle.side] = this.props.canvasStyle.indent;
-        this.canvas.style.opacity = 0
+        this.element.width = this.props.canvasStyle.radius * 2;
+        this.element.height = this.props.canvasStyle.radius * 2;
+        this.element.style.position = 'fixed';
+        this.element.style.top = this.props.canvasStyle.top;
+        this.element.style[this.props.canvasStyle.side] = this.props.canvasStyle.indent;
+        this.element.style.opacity = 0
     }
 
     createCanvas() {
         this.img = document.createElement('img');
         this.img.src = this.props.imgSrc;
-        this.canvas = document.createElement('canvas');
-        this.ctx = this.canvas.getContext("2d");
-        this.canvas.scroll = false;
-        this.canvas.pagePosition = '';
+        this.element = document.createElement('canvas');
+        this.ctx = this.element.getContext("2d");
+        this.element.scroll = false;
+        this.element.pagePosition = '';
 
         let loadImg = () => {
             this.__canvasDraw()
@@ -46,7 +46,7 @@ export default class  ButtonUpDown {
         }
 
         this.__canvasStyle()
-        this.canvas.addEventListener('click', this.__togglePosition.bind(this))
+        this.element.addEventListener('click', this.__togglePosition.bind(this))
     }
 
 
@@ -54,20 +54,20 @@ export default class  ButtonUpDown {
     __toggleVisibilityAnimation(show) {
         let animation = () => {
 
-            if (this.canvas.style.opacity <= this.props.barOpacity && this.canvas.style.opacity >= 0) {
+            if (this.element.style.opacity <= this.props.barOpacity && this.element.style.opacity >= 0) {
                 if (show.value === true) {
-                    this.canvas.style.opacity = +this.canvas.style.opacity + this.elemOpacitySpeedAnimation
+                    this.element.style.opacity = +this.element.style.opacity + this.elemOpacitySpeedAnimation
                 }
                 else if (show.value === false) {
-                    this.canvas.style.opacity -= this.elemOpacitySpeedAnimation
+                    this.element.style.opacity -= this.elemOpacitySpeedAnimation
                 }
 
-                if (this.canvas.style.opacity > this.props.barOpacity) {
-                    this.canvas.style.opacity = this.props.barOpacity;
+                if (this.element.style.opacity > this.props.barOpacity) {
+                    this.element.style.opacity = this.props.barOpacity;
                     return
                 }
-                if (this.canvas.style.opacity < 0) {
-                    this.canvas.style.opacity = 0;
+                if (this.element.style.opacity < 0) {
+                    this.element.style.opacity = 0;
                     return
                 }
             }
@@ -82,14 +82,14 @@ export default class  ButtonUpDown {
         let show = {};
 
         return () => {
-            if (this.canvas.scroll === false) {
+            if (this.element.scroll === false) {
 
                 pageYOffset = window.pageYOffset;
-                switch (this.canvas.pagePosition) {
+                switch (this.element.pagePosition) {
 
                     case (''):
                         if (pageYOffset > this.props.toggleVisibilityPoint) {
-                            this.canvas.pagePosition = 'top';
+                            this.element.pagePosition = 'top';
                             show.value = true;
                             this.__toggleVisibilityAnimation(show)
                         }
@@ -97,7 +97,7 @@ export default class  ButtonUpDown {
 
                     case ('top'):
                         if (pageYOffset < this.props.toggleVisibilityPoint) {
-                            this.canvas.pagePosition = '';
+                            this.element.pagePosition = '';
                             show.value = false;
                             this.__toggleVisibilityAnimation(show)
                         }
@@ -105,7 +105,7 @@ export default class  ButtonUpDown {
 
                     case ('bottom'):
                         if (pageYOffset > this.props.toggleVisibilityPoint) {
-                            this.canvas.pagePosition = 'top';
+                            this.element.pagePosition = 'top';
                             let animation = () => {
                                 if (this.radian < 3.15 - this.radianDelta) {
                                     this.radian += this.radianDelta;
@@ -124,16 +124,16 @@ export default class  ButtonUpDown {
     }
 
     __togglePosition()  {
-        if (this.canvas.scroll === false) {
-            this.canvas.scroll = true;
+        if (this.element.scroll === false) {
+            this.element.scroll = true;
             
-            switch (this.canvas.pagePosition) {
+            switch (this.element.pagePosition) {
                 case (''):
-                    this.canvas.scroll = false;
+                    this.element.scroll = false;
                     break;
 
                 case ('top'):
-                    this.canvas.whereReturn = window.pageYOffset;
+                    this.element.whereReturn = window.pageYOffset;
                     this.__togglePositionAnimation(0, 'bottom', -1);
                     break;
 
@@ -149,10 +149,10 @@ export default class  ButtonUpDown {
         let path;
         //Formula for animation of speed | START
         if (pageYOffset >= 0 && togglePosition === 'bottom') {
-            path = this.canvas.whereReturn/2
+            path = this.element.whereReturn/2
         }
         else {
-            path = (this.canvas.whereReturn - window.pageYOffset)/2
+            path = (this.element.whereReturn - window.pageYOffset)/2
         }
         let animationTime = this.props.animationTime / 0.016 * 2;
         let accelerationTime = animationTime / 2;
@@ -165,7 +165,7 @@ export default class  ButtonUpDown {
         let temp = false;
         let goAnimation = () => {
 
-            if ((pageYOffset > 0 && togglePosition === 'bottom') || (pageYOffset < this.canvas.whereReturn && togglePosition === 'top')) {
+            if ((pageYOffset > 0 && togglePosition === 'bottom') || (pageYOffset < this.element.whereReturn && togglePosition === 'top')) {
                 if (scrollSpeed <= speed && temp === false) {
                     scrollSpeed += acceleration
                 }
@@ -176,7 +176,7 @@ export default class  ButtonUpDown {
                 pageYOffset = pageYOffset + direction * scrollSpeed;
                 window.scrollTo(0, pageYOffset);
 
-                this.canvas.pagePosition = togglePosition;
+                this.element.pagePosition = togglePosition;
                 if (this.radian < 3.15 - this.radianDelta) {
                     this.radian += this.radianDelta;
                     this.__rotate(direction)
@@ -184,7 +184,7 @@ export default class  ButtonUpDown {
                 requestAnimationFrame(goAnimation)
             }
             else {
-                this.canvas.scroll = false
+                this.element.scroll = false
             }
         };
         this.radian = 0;
