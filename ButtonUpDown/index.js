@@ -20,7 +20,9 @@ let firstButton = new ButtonUpDown({
 
 window.addEventListener('DOMContentLoaded', function() {
     firstButton.createCanvas()
-    window.addEventListener('scroll', firstButton.toggleVisibility());
+    window.addEventListener('scroll', function() {
+        firstButton.toggleVisibility()()
+    });
 })
 
 window.addEventListener('load', function() {

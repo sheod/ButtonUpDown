@@ -105,12 +105,16 @@ export default class  ButtonUpDown {
 
                     case ('bottom'):
                         if (pageYOffset > this.props.toggleVisibilityPoint) {
+                            this.element.scroll = true;
                             this.element.pagePosition = 'top';
                             let animation = () => {
                                 if (this.radian < 3.15 - this.radianDelta) {
                                     this.radian += this.radianDelta;
                                     this.__rotate(1);
                                     requestAnimationFrame(animation)
+                                }
+                                else {
+                                    this.element.scroll = false;
                                 }
                             };
                             this.radian = 0;
